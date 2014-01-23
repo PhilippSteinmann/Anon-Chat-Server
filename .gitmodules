@@ -1,6 +1,3 @@
-[submodule "client-files"]
-	path = client-files
-	url = git@github.com:Zabari/Anon-Chat.git
 [submodule "client"]
 	path = client
 	url = git@github.com:Zabari/Chat-Client.git
