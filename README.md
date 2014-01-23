@@ -1,4 +1,4 @@
-Anon-Chat-Server
+Chat-Server
 ================
 
-Server equivalent to Zabari's [Anon-Chat](https://github.com/Zabari/Anon-Chat)
+Server equivalent to Zabari's [Chat-Client](https://github.com/Zabari/Anon-Chat)
