@@ -4,7 +4,7 @@ import java.io.*;
 // Import Message.java from 'clients' submodule.
 // You have to add `package client` to the top of Message.java
 
-import client.Message;
+import ChatClient.Message;
 
 public class LocalTest {
     public static void main(String[] args) throws IOException {
