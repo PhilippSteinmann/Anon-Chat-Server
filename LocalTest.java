@@ -1,41 +1,55 @@
-/*
- * class LOCALTEST
- * Runs local server that periodically sends messages
-*/
-
 import java.net.*;
 import java.io.*;
+
+// Import Message.java from 'clients' submodule.
+// You have to add `package client` to the top of Message.java
+
+import client.Message;
 
 public class LocalTest {
     public static void main(String[] args) throws IOException {
 
-        System.out.println("connecting to client...");
+        System.out.println("Connecting to client...");
 
-        // Called a 'try-with-resources expression.
+        // Called a 'try-with-resources' expression.
+        // If it throws an error, make sure you have Java 7.
         try (
-            // Create the socket of the server, listening to port 9090
+        
+            // Create a new ServerSocket, which is used to create the connection
+            // to the client. We're listening to port 9090 on localhost.
             ServerSocket serverSocket = 
-                new ServerSocket(9090, 0, InetAddress.getByName(null)); // localhost
+                new ServerSocket(9090, 0, InetAddress.getByName(null));
 
-            // Through the serverSocket, accept the socket to the client
+            // Create a connection to the client
             Socket clientSocket = serverSocket.accept();
 
-            // Used to send mssages
-            PrintWriter out =
-                new PrintWriter(clientSocket.getOutputStream(), true);
+            // Used to send objects
+            ObjectOutputStream out =
+                new ObjectOutputStream(clientSocket.getOutputStream());                   
 
-            // Used to receive messages
-            BufferedReader in = new BufferedReader(
-                new InputStreamReader(clientSocket.getInputStream()));
+            // Used to receive objects
+            ObjectInputStream in = new ObjectInputStream(
+                clientSocket.getInputStream());
         )  {
-                System.out.println("connected.");
-                String inputLine;
-                while (true) { // infinite, interrupt by Ctrl-C
-                    inputLine = in.readLine(); // read messages in socket
-                    if (inputLine != null) // if not empty
-                        System.out.println("Received: " + inputLine);
-                    out.println("what's up?"); // send message to client
-                    Thread.sleep(2000); // wait 2 seconds
+                System.out.println("Connected.");
+                Message received; // from the client
+    
+                // Test Message to send
+                Message ping = new Message("What's up?", 2, 1, 1000L);
+
+                // Infinite loop, interrupt by Ctrl-C
+                while (true) {
+                    // Get the Object in the input stream, and
+                    // typecast it into a Message
+                    received = (Message) in.readObject();
+                    if (received != null)
+                        System.out.println("Received: " + received);
+
+                    // Send test message to client
+                    out.writeObject(ping);
+
+                    // Pause for 2 seconds
+                    Thread.sleep(2000);
                 
                 }
         } catch (Exception e) {
