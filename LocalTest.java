@@ -31,7 +31,6 @@ public class LocalTest {
         )  {
                 // http://stackoverflow.com/a/7586021/805556
                 out.flush();
-                out.writeObject(null);
                 System.out.println("Connected.");
                 Message received; // from the client
     
