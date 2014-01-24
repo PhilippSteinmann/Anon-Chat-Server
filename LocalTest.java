@@ -23,12 +23,15 @@ public class LocalTest {
 
             // Used to send objects
             ObjectOutputStream out =
-                new ObjectOutputStream(clientSocket.getOutputStream());                   
+                new ObjectOutputStream(clientSocket.getOutputStream());
 
             // Used to receive objects
             ObjectInputStream in = new ObjectInputStream(
                 clientSocket.getInputStream());
         )  {
+                // http://stackoverflow.com/a/7586021/805556
+                out.flush();
+                out.writeObject(null);
                 System.out.println("Connected.");
                 Message received; // from the client
     
