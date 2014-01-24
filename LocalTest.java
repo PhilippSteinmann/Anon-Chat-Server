@@ -1,20 +1,18 @@
 import java.net.*;
 import java.io.*;
 
-// Import Message.java from 'clients' submodule.
-// You have to add `package client` to the top of Message.java
-
-import ChatClient.Message;
+// Does not work, because the Message.java in this directory is different
+// than the one from ChatClient.
+// To fix, implement packaging in ChatClient
+//import ChatClient.Message;
 
 public class LocalTest {
     public static void main(String[] args) throws IOException {
-
-        System.out.println("Connecting to client...");
+        System.out.println("Awaiting client...");
 
         // Called a 'try-with-resources' expression.
         // If it throws an error, make sure you have Java 7.
         try (
-        
             // Create a new ServerSocket, which is used to create the connection
             // to the client. We're listening to port 9090 on localhost.
             ServerSocket serverSocket = 
@@ -53,7 +51,9 @@ public class LocalTest {
                 
                 }
         } catch (Exception e) {
-            System.out.println("There was an Exception.");
+            System.out.println(e);
+            // http://stackoverflow.com/a/5916374/805556
+            System.out.println("Line " + e.getStackTrace()[0].getLineNumber());
         }
 
     }
