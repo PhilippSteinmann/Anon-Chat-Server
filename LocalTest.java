@@ -42,8 +42,7 @@ public class LocalTest {
                     // Get the Object in the input stream, and
                     // typecast it into a Message
                     received = (Message) in.readObject();
-                    if (received != null)
-                        System.out.println("Received: " + received);
+                    System.out.println("Client: " + received);
 
                     // Send test message to client
                     out.writeObject(ping);
@@ -54,8 +53,6 @@ public class LocalTest {
                 }
         } catch (Exception e) {
             System.out.println(e);
-            // http://stackoverflow.com/a/5916374/805556
-            System.out.println("Line " + e.getStackTrace()[0].getLineNumber());
         }
 
     }
