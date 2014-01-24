@@ -1,3 +1,0 @@
-[submodule "ChatClient"]
-	path = ChatClient
-	url = git@github.com:Zabari/ChatClient.git
