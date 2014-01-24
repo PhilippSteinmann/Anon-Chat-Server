@@ -7,8 +7,7 @@ import java.io.*;
 //import ChatClient.Message;
 
 public class LocalTest {
-    public static void main(String[] args) throws IOException {
-        System.out.println("Awaiting client...");
+    public static void main(String[] args) throws IOException { System.out.println("Awaiting client...");
 
         // Called a 'try-with-resources' expression.
         // If it throws an error, make sure you have Java 7.
@@ -34,8 +33,21 @@ public class LocalTest {
                 System.out.println("Connected.");
                 Message received; // from the client
     
-                // Test Message to send
-                Message ping = new Message("What's up?", 2, 1, 1000L);
+                // Test Messages to send
+                int currentMsg = 0;
+                Message[] testMessages = new Message[6];
+                testMessages[0] = 
+                    new Message("How is it going?", 2, 1, 1000L);
+                testMessages[1] = 
+                    new Message("How is the weather over there?", 2, 1, 1000L);
+                testMessages[2] = 
+                    new Message("I'm feeling slightly ill this evening, thank you for asking.", 2, 1, 1000L);
+                testMessages[3] = 
+                    new Message("Ah, I will just take a nice hot bath and be fine again.", 2, 1, 1000L);
+                testMessages[4] = 
+                    new Message("I will also probably read the Times. Do you read any newspapers?", 2, 1, 1000L);
+                testMessages[5] = 
+                    new Message("I'm sorry, someone was at the door. Where were we?", 2, 1, 1000L);
 
                 // Infinite loop, interrupt by Ctrl-C
                 while (true) {
@@ -44,11 +56,17 @@ public class LocalTest {
                     received = (Message) in.readObject();
                     System.out.println("Client: " + received);
 
-                    // Send test message to client
-                    out.writeObject(ping);
-
                     // Pause for 2 seconds
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
+
+                    Message testMsg = testMessages[currentMsg];
+                    currentMsg++;
+                    if (currentMsg >= testMessages.length)
+                        currentMsg = 0;
+
+                    // Send test message to client
+                    out.writeObject(testMsg);
+
                 
                 }
         } catch (Exception e) {
